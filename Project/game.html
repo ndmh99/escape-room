@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Escape Room</title>
+		<meta charset="UTF-8">
+		<script src="game.js"></script>
+		<style>
+			body {
+			  background: url("sand.png");
+			  background-repeat: no-repeat;
+			  background-size: 1000px 700px;
+			}
+			</style>
+	</head>
+	<body onload="setup()">
+		<audio loop id="myAudio">
+			<source src="audio/audio.mp3" type="audio/mpeg">
+		</audio>
+		<script>
+			var sound = document.getElementById("myAudio"); 
+			sound.play(); 
+		</script>
+		<canvas id="surface" width="1000" height="700"></canvas>
+	</body>
+</html>
