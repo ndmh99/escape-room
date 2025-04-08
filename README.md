@@ -53,7 +53,7 @@ The game features carefully selected sound effects and background music that enh
 
 ## 🔧 Technical Implementation
 
-The game is built using pure JavaScript, HTML5 Canvas, and CSS. Audio elements are implemented using the Web Audio API.
+The game is built using pure JavaScript, HTML5 Canvas, and CSS. Audio elements are implemented using local sounds.
 
 ```javascript
 // Example of player movement implementation
