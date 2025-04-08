@@ -4,6 +4,9 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+Game Cover
+![License](https://github.com/ndmh99/escape-room/blob/main/cover.png)
+
 ## 📖 Overview
 
 Escape Room is an interactive adventure game where players navigate through dynamic levels to retrieve keys and hammers hidden within cactuses and treasure boxes. Players must use their problem-solving skills to answer questions correctly to progress through levels and avoid aggressive skeletons patrolling the area.
