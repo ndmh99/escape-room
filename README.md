@@ -79,4 +79,4 @@ function movePlayer(direction) {
 
 ---
 
-Happy escaping! 🗝️🔨
+Happy escaping! 🗝️🔨 Made with ❤️ by NDMH
