@@ -1,36 +1,51 @@
 "use strict";
 let x=450; // x for character initial position in Canavs
 let y=430; // y for character initial position in Canvas
-let upImage = new Image();
-upImage.src = "../assets/images/up.png";
-let downImage = new Image();
-downImage.src="../assets/images/down.png";
-let rightImage= new Image();
-rightImage.src="../assets/images/right.png";
-let leftImage=new Image();
-leftImage.src="../assets/images/left.png";
-let stoneImage = new Image();
-stoneImage.src = "../assets/images/brick1.png";
-let key= new Image();
-key.src="../assets/images/key.png";
-let start= new Image();
-start.src="../assets/images/start.png"
-let obstacle=new Image();
-obstacle.src="../assets/images/stone.png"
-let skeletonUp=new Image();
-skeletonUp.src="../assets/images/skeletonUp.png"
-let skeletonDown=new Image();
-skeletonDown.src="../assets/images/skeletonDown.png"
-let skeletonLeft=new Image();
-skeletonLeft.src="../assets/images/skeletonLeft.png"
-let skeletonRight=new Image();
-skeletonRight.src="../assets/images/skeletonRight.png"
-let keyPrize=new Image();
-keyPrize.src="../assets/images/keyPrize.png"
-let openChest=new Image();
-openChest.src="../assets/images/chestopen.png"
-let closeChest=new Image();
-closeChest.src="../assets/images/chestclose.png"
+
+// character animation object
+let character_moveUp_animation = new Image();
+character_moveUp_animation.src = "../assets/images/objects/character/character-moveUp-animation.png";
+let character_moveDown_animation = new Image();
+character_moveDown_animation.src = "../assets/images/objects/character/character-moveDown-animation.png";
+let character_moveLeft_animation = new Image();
+character_moveLeft_animation.src = "../assets/images/objects/character/character-moveLeft-animation.png";
+let character_moveRight_animation = new Image();
+character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
+let character_initial = new Image();
+character_initial.src = "../assets/images/objects/character/character_initial.png";
+
+
+// enemy animation object
+let enemy_moveUp_animation = new Image();
+enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
+let enemy_moveDown_animation = new Image();
+enemy_moveDown_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png";
+let enemy_moveLeft_animation = new Image();
+enemy_moveLeft_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png";
+let enemy_moveRight_animation = new Image();
+enemy_moveRight_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png";
+
+// treasure chest animation object
+let treasure_chest_closed = new Image();
+treasure_chest_closed.src = "../assets/images/objects/treasure-chest/chest-closed.png";
+let treasure_chest_open = new Image();
+treasure_chest_open.src = "../assets/images/objects/treasure-chest/chest-open.png";
+
+// key object for level 1
+let open_key = new Image();
+open_key.src = "../assets/images/levels/level1/key/key.png";
+
+// Obstacle object for level 1
+let cactus_lv1_obstacle = new Image();
+cactus_lv1_obstacle.src = "../assets/images/levels/level1/obstacle/cactus-lv1-obstacle.png";
+let stone_lv1_obstacle = new Image();
+stone_lv1_obstacle.src = "../assets/images/levels/level1/obstacle/stone-lv1-obstacle.png";
+
+
+let key=open_key;
+let start=character_initial;
+
+// canvas object
 let ctx;
 
 function setup() {
@@ -66,11 +81,11 @@ function displayEverythingLv1()
     c=setInterval(function(){skeleton3.draw();},120);
     mainChar();
     console.log("key in brick "+(brickAndkey.ran+1));
-    ctx.drawImage(closeChest,0,580,120,100)
+    ctx.drawImage(treasure_chest_closed,0,580,120,100)
 }
-let skeleton1 = new Skeleton(940,0,true,skeletonDown,0,600); 
-let skeleton2 = new Skeleton(0,400,true,skeletonUp,0,400);
-let skeleton3 = new Skeleton(147,25,false,skeletonRight,150,600);
+let skeleton1 = new Skeleton(940,0,true,enemy_moveDown_animation,0,600); 
+let skeleton2 = new Skeleton(0,400,true,enemy_moveUp_animation,0,400);
+let skeleton3 = new Skeleton(147,25,false,enemy_moveRight_animation,150,600);
 
 let brickAndkey={
     ran:randomInteger(0,5),
@@ -83,7 +98,7 @@ let brickAndkey={
     {
         for(let brick=0;brick<6;brick++)
         {
-            ctx.drawImage(stoneImage,xBrick[brick],yBrick[brick]);
+            ctx.drawImage(cactus_lv1_stone_lv1_obstacle,xBrick[brick],yBrick[brick]);
         }
     }
 }
@@ -93,7 +108,7 @@ let stone={
     {
         for(let i=0;i<xStone.length;i++)
         {
-            ctx.drawImage(obstacle,xStone[i],yStone[i],120,100);
+            ctx.drawImage(stone_lv1_obstacle,xStone[i],yStone[i],120,100);
         }  
     }
 }
@@ -158,14 +173,14 @@ function mainChar(){
             }
             if(keyCheck==true)
             {
-                ctx.drawImage(openChest,0,580,120,100)
+                ctx.drawImage(treasure_chest_open,0,580,120,100)
             }
             else
             {
-                ctx.drawImage(closeChest,0,580,120,100)
+                ctx.drawImage(treasure_chest_closed,0,580,120,100)
             }
             stone.draw();
-            ctx.drawImage(upImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+            ctx.drawImage(enemy_moveUp_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
             brickAndkey.drawBrick();
             stepSound.play()
         }
@@ -188,7 +203,7 @@ function mainChar(){
                 {
                     cycle=0;
                 }
-                 ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                 ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                  stepSound.play()
                  stone.draw();
                  speed=18;
@@ -203,20 +218,20 @@ function mainChar(){
                 }
                 if(keyCheck==true)
                 {
-                    ctx.drawImage(openChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_open,0,580,120,100)
                 }
                 else
                 {
-                    ctx.drawImage(closeChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_closed,0,580,120,100)
                 } 
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
                     stone.draw();
-                    ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else
                 {
-                    ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                     stone.draw();
                 }
                 stepSound.play()
@@ -242,7 +257,7 @@ function mainChar(){
                 {
                     cycle=0;
                 }
-                ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 stepSound.play()
                 stone.draw();
             }
@@ -258,20 +273,20 @@ function mainChar(){
                 }
                 if(keyCheck==true)
                 {
-                    ctx.drawImage(openChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_open,0,580,120,100)
                 }
                 else
                 {
-                    ctx.drawImage(closeChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_closed,0,580,120,100)
                 } 
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
                     stone.draw();
-                    ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else
                 {
-                    ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                     stone.draw();
                 }
                 stepSound.play()
@@ -296,7 +311,7 @@ function mainChar(){
                     cycle=0;
                 }
                 stone.draw();
-                ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 stepSound.play()
             }
             else
@@ -310,20 +325,20 @@ function mainChar(){
                 }
                 if(keyCheck==true)
                 {
-                    ctx.drawImage(openChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_open,0,580,120,100)
                 }
                 else
                 {
-                    ctx.drawImage(closeChest,0,580,120,100)
+                    ctx.drawImage(treasure_chest_closed,0,580,120,100)
                 } 
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
                     stone.draw();
-                    ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else
                 {
-                    ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                     stone.draw();
                 }
                 stepSound.play()
@@ -336,7 +351,7 @@ function mainChar(){
             keyCheck=true;
             pickSound.play();
             ctx.clearRect(0,590,120,100)
-            ctx.drawImage(openChest,0,580,120,100)
+            ctx.drawImage(treasure_chest_open,0,580,120,100)
             ctx.drawImage(key,xBrick[brickAndkey.ran],yBrick[brickAndkey.ran])
         }
         if(keyCheck==true && y>560 && x<63)
@@ -375,17 +390,17 @@ function Skeleton(xSke,ySke,direction,name,start,end){
                 if(this.ySke>this.end)
                 {
                     this.speed=-10;
-                    this.name=skeletonUp;
+                    this.name=enemy_moveUp_animation;
                 }
                 else if(this.ySke<this.start)
                 {
                     this.speed=10;
-                    this.name=skeletonDown;
+                    this.name=enemy_moveDown_animation;
                 }
                 this.ySke+=this.speed;
             } else {
                 sW=63.4;
-                name = skeletonRight;
+                name = enemy_moveRight_animation;
                 ctx.clearRect (this.xSke-10 , this.ySke, sW , sH );
                 ctx.drawImage(this.name,this.cycle*sW,0,sW,sH,this.xSke,this.ySke,sW,sH)
                 this.cycle++;
@@ -396,12 +411,12 @@ function Skeleton(xSke,ySke,direction,name,start,end){
                 if(this.xSke>this.end)
                 {
                     this.speed=-10;
-                    this.name=skeletonLeft;
+                    this.name=enemy_moveLeft_animation;
                 }
                 else if(this.xSke<this.start)
                 {
                     this.speed=10;
-                    this.name=skeletonRight;
+                    this.name=enemy_moveRight_animation;
                 }
                 this.xSke+=this.speed;
             }

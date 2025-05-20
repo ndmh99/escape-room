@@ -1,36 +1,47 @@
 "use strict";
 let x=450; // x for character initial position in Canavs
 let y=430; // y for character initial position in Canvas
-let upImage = new Image();
-upImage.src = "../assets/images/up.png";
-let downImage = new Image();
-downImage.src="../assets/images/down.png";
-let rightImage= new Image();
-rightImage.src="../assets/images/right.png";
-let leftImage=new Image();
-leftImage.src="../assets/images/left.png";
-let stoneImage = new Image();
-stoneImage.src = "../assets/images/red1.png";
-let key= new Image();
-key.src="../assets/images/hammer.png";
-let start= new Image();
-start.src="../assets/images/start.png"
-let obstacle=new Image();
-obstacle.src="../assets/images/stone.png"
-let skeletonUp=new Image();
-skeletonUp.src="../assets/images/skeletonUp.png"
-let skeletonDown=new Image();
-skeletonDown.src="../assets/images/skeletonDown.png"
-let skeletonLeft=new Image();
-skeletonLeft.src="../assets/images/skeletonLeft.png"
-let skeletonRight=new Image();
-skeletonRight.src="../assets/images/skeletonRight.png"
-let keyPrize=new Image();
-keyPrize.src="../assets/images/hammer.png"
-let fire=new Image();
-fire.src="../assets/images/aaa.png";
-let exit=new Image();
-exit.src="../assets/images/8.png";
+
+
+// character animation object
+let character_moveUp_animation = new Image();
+character_moveUp_animation.src = "../assets/images/objects/character/character-moveUp-animation.png";
+let character_moveDown_animation = new Image();
+character_moveDown_animation.src = "../assets/images/objects/character/character-moveDown-animation.png";
+let character_moveLeft_animation = new Image();
+character_moveLeft_animation.src = "../assets/images/objects/character/character-moveLeft-animation.png";
+let character_moveRight_animation = new Image();
+character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
+let character_initial = new Image();
+character_initial.src = "../assets/images/objects/character/character_initial.png";
+
+// enemy animation object
+let enemy_moveUp_animation = new Image();
+enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
+let enemy_moveDown_animation = new Image();
+enemy_moveDown_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png";
+let enemy_moveLeft_animation = new Image();
+enemy_moveLeft_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png";
+let enemy_moveRight_animation = new Image();
+enemy_moveRight_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png";
+
+// key object for level 2
+let open_key = new Image();
+open_key.src = "../assets/images/levels/level2/key/key.png";
+
+// Obstacle object for level 2
+let animated_fire_lv2_obstacle = new Image();
+animated_fire_lv2_obstacle.src = "../assets/images/levels/level2/obstacle/animated-fire-lv2-obstacle.png";
+let rock_lv2_obstacle = new Image();
+rock_lv2_obstacle.src = "../assets/images/levels/level2/obstacle/rock-lv2-obstacle.png";
+let final_exit = new Image();
+final_exit.src = "../assets/images/levels/level2/obstacle/final-wall-lv2-obstacle.png";
+
+
+let key= open_key;
+let start= character_initial;
+
+// canvas object
 let ctx;
 
 function setup() {
@@ -49,17 +60,17 @@ function displayEverythingLv2(){
     brickAndkey.draw();
     mainChar();
     startBurn();
-    ctx.drawImage(exit,931,263);
+    ctx.drawImage(final_exit,931,263);
     a=setInterval(function(){skeleton1.draw();},120);
     b=setInterval(function(){skeleton2.draw();},120);
     c=setInterval(function(){skeleton3.draw();},120);
     d=setInterval(function(){skeleton4.draw();},120);
     console.log("key in brick "+(brickAndkey.ran+1)); 
 }
-let skeleton1 = new Skeleton(940,600,false,skeletonLeft,0,900); 
-let skeleton2 = new Skeleton(0,600,true,skeletonUp,70,600);
-let skeleton3 = new Skeleton(0,25,false,skeletonRight,0,900);
-let skeleton4 = new Skeleton(600,25,true,skeletonDown,70,530);
+let skeleton1 = new Skeleton(940,600,false,enemy_moveLeft_animation,0,900); 
+let skeleton2 = new Skeleton(0,600,true,enemy_moveUp_animation,70,600);
+let skeleton3 = new Skeleton(0,25,false,enemy_moveRight_animation,0,900);
+let skeleton4 = new Skeleton(600,25,true,enemy_moveDown_animation,70,530);
 
 let stepSound;
 let pickSound;
@@ -82,7 +93,7 @@ function startBurn(){
         function(){
                 for (let i=0; i<5; i++){
                     ctx.clearRect(xStone[i],yStone[i],78,80);
-                    ctx.drawImage(fire,cycle*sW,0,sW,sH,xStone[i],yStone[i],sW,sH);
+                    ctx.drawImage(animated_fire_lv2_obstacle,cycle*sW,0,sW,sH,xStone[i],yStone[i],sW,sH);
                 }
                 cycle=(cycle+1)%5;
             
@@ -101,14 +112,14 @@ let brickAndkey={
         }
         for(let brick=0;brick<6;brick++)
         {
-            ctx.drawImage(stoneImage,xBrick[brick],yBrick[brick]);
+            ctx.drawImage(rock_lv2_obstacle,xBrick[brick],yBrick[brick]);
         }
     },
     drawBrick:function()
     {
         for(let brick=0;brick<6;brick++)
         {
-            ctx.drawImage(stoneImage,xBrick[brick],yBrick[brick]);
+            ctx.drawImage(rock_lv2_obstacle,xBrick[brick],yBrick[brick]);
         }
     }
 }
@@ -136,17 +147,17 @@ function Skeleton(xSke,ySke,direction,name,start,end){
                 if(this.ySke>this.end)
                 {
                     this.speed=-10;
-                    this.name=skeletonUp;
+                    this.name=enemy_moveUp_animation;
                 }
                 else if(this.ySke<this.start)
                 {
                     this.speed=10;
-                    this.name=skeletonDown;
+                    this.name=enemy_moveDown_animation;
                 }
                 this.ySke+=this.speed;
             } else {
                 sW=63.4;
-                name = skeletonRight;
+                name = enemy_moveRight_animation;
                 ctx.clearRect (this.xSke-10 , this.ySke, sW , sH );
                 ctx.drawImage(this.name,this.cycle*sW,0,sW,sH,this.xSke,this.ySke,sW,sH)
                 this.cycle++;
@@ -157,12 +168,12 @@ function Skeleton(xSke,ySke,direction,name,start,end){
                 if(this.xSke>this.end)
                 {
                     this.speed=-10;
-                    this.name=skeletonLeft;
+                    this.name=enemy_moveLeft_animation;
                 }
                 else if(this.xSke<this.start)
                 {
                     this.speed=10;
-                    this.name=skeletonRight;
+                    this.name=enemy_moveRight_animation;
                 }
                 this.xSke+=this.speed;
             }
@@ -238,7 +249,7 @@ function mainChar(){
                     cycle=0;
                 }
             }
-            ctx.drawImage(upImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+            ctx.drawImage(character_moveUp_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
             brickAndkey.drawBrick();
             stepSound.play()
         }
@@ -261,7 +272,7 @@ function mainChar(){
                 {
                     cycle=0;
                 }
-                 ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                 ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                  speed=18;
             }
             else{
@@ -274,10 +285,10 @@ function mainChar(){
                 } 
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
-                    ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else{
-                    ctx.drawImage(downImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
             }
             stepSound.play()
@@ -302,7 +313,7 @@ function mainChar(){
                 {
                     cycle=0;
                 }
-                ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
             }
             else
             {
@@ -316,11 +327,11 @@ function mainChar(){
                 }
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
-                    ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else
                 {
-                    ctx.drawImage(rightImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
             }
             stepSound.play()
@@ -343,7 +354,7 @@ function mainChar(){
                 {
                     cycle=0;
                 }
-                ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
             }
             else
             {
@@ -356,11 +367,11 @@ function mainChar(){
                 }
                 if(y>yStone[0] || y>yStone[1] || y>yStone[2] || y>yStone[3] || y>yStone[4])
                 {
-                    ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
                 else
                 {
-                    ctx.drawImage(leftImage,cycle*sW,0,sW,sH,x,y,sW,sH);
+                    ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 }
             }
             stepSound.play()
