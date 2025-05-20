@@ -13,7 +13,7 @@ character_moveLeft_animation.src = "../assets/images/objects/character/character
 let character_moveRight_animation = new Image();
 character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
 let character_initial = new Image();
-character_initial.src = "../assets/images/objects/character/character_initial.png";
+character_initial.src = "../assets/images/objects/character/character-intial.png";
 
 // enemy animation object
 let enemy_moveUp_animation = new Image();
@@ -31,11 +31,11 @@ open_key.src = "../assets/images/levels/level2/key/key.png";
 
 // Obstacle object for level 2
 let animated_fire_lv2_obstacle = new Image();
-animated_fire_lv2_obstacle.src = "../assets/images/levels/level2/obstacle/animated-fire-lv2-obstacle.png";
+animated_fire_lv2_obstacle.src = "../assets/images/levels/level2/obstacles/animated-fire-lv2-obstacle.png";
 let rock_lv2_obstacle = new Image();
-rock_lv2_obstacle.src = "../assets/images/levels/level2/obstacle/rock-lv2-obstacle.png";
+rock_lv2_obstacle.src = "../assets/images/levels/level2/obstacles/rock-lv2-obstacle.png";
 let final_exit = new Image();
-final_exit.src = "../assets/images/levels/level2/obstacle/final-wall-lv2-obstacle.png";
+final_exit.src = "../assets/images/levels/level2/obstacles/final-wall-lv2-obstacle.png";
 
 
 let key= open_key;
@@ -76,8 +76,8 @@ let stepSound;
 let pickSound;
 function preload()
 {
-    stepSound=new Audio("../assets/effect/move.mp3")
-    pickSound=new Audio("../assets/effect/pick.mp3")
+    stepSound=new Audio("../assets/audio/effect/step.mp3")
+    pickSound=new Audio("../assets/audio/effect/pick.mp3")
 }
 
 function randomInteger(min,max){ 

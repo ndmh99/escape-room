@@ -12,14 +12,15 @@ character_moveLeft_animation.src = "../assets/images/objects/character/character
 let character_moveRight_animation = new Image();
 character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
 let character_initial = new Image();
-character_initial.src = "../assets/images/objects/character/character_initial.png";
-
+character_initial.src = "../assets/images/objects/character/character-intial.png";
 
 // enemy animation object
-let enemy_moveUp_animation = new Image();
-enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
+let character = new Image();
+character.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
 let enemy_moveDown_animation = new Image();
 enemy_moveDown_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png";
+let enemy_moveUp_animation = new Image();
+enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
 let enemy_moveLeft_animation = new Image();
 enemy_moveLeft_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png";
 let enemy_moveRight_animation = new Image();
@@ -37,9 +38,9 @@ open_key.src = "../assets/images/levels/level1/key/key.png";
 
 // Obstacle object for level 1
 let cactus_lv1_obstacle = new Image();
-cactus_lv1_obstacle.src = "../assets/images/levels/level1/obstacle/cactus-lv1-obstacle.png";
+cactus_lv1_obstacle.src = "../assets/images/levels/level1/obstacles/cactus-lv1-obstacle.png";
 let stone_lv1_obstacle = new Image();
-stone_lv1_obstacle.src = "../assets/images/levels/level1/obstacle/stone-lv1-obstacle.png";
+stone_lv1_obstacle.src = "../assets/images/levels/level1/obstacles/stone-lv1-obstacle.png";
 
 
 let key=open_key;
@@ -67,8 +68,8 @@ let stepSound;
 let pickSound;
 function preload()
 {
-    stepSound=new Audio("../assets/effect/move.mp3")
-    pickSound=new Audio("../assets/effect/pick.mp3")
+    stepSound=new Audio("../assets/audio/effect/step.mp3")
+    pickSound=new Audio("../assets/audio/effect/pick.mp3")
 }
 let a,b,c;
 function displayEverythingLv1()
@@ -84,7 +85,7 @@ function displayEverythingLv1()
     ctx.drawImage(treasure_chest_closed,0,580,120,100)
 }
 let skeleton1 = new Skeleton(940,0,true,enemy_moveDown_animation,0,600); 
-let skeleton2 = new Skeleton(0,400,true,enemy_moveUp_animation,0,400);
+let skeleton2 = new Skeleton(0,400,true,character,0,400);
 let skeleton3 = new Skeleton(147,25,false,enemy_moveRight_animation,150,600);
 
 let brickAndkey={
@@ -98,7 +99,7 @@ let brickAndkey={
     {
         for(let brick=0;brick<6;brick++)
         {
-            ctx.drawImage(cactus_lv1_stone_lv1_obstacle,xBrick[brick],yBrick[brick]);
+            ctx.drawImage(cactus_lv1_obstacle,xBrick[brick],yBrick[brick]);
         }
     }
 }
@@ -180,7 +181,7 @@ function mainChar(){
                 ctx.drawImage(treasure_chest_closed,0,580,120,100)
             }
             stone.draw();
-            ctx.drawImage(enemy_moveUp_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
+            ctx.drawImage(character_moveUp_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
             brickAndkey.drawBrick();
             stepSound.play()
         }
@@ -363,7 +364,7 @@ function mainChar(){
 
 function nextlv()
 {
-    location.href = 'levels/level2.html';
+    location.href = './level2.html';
 }
 
 
