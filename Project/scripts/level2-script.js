@@ -24,44 +24,65 @@
 let x=450; // x for character initial position in Canvas
 let y=430; // y for character initial position in Canvas
 
+/**
+ * Asset loading - Organized by type
+ * Groups related images into objects for better code organization
+ */
+
+// Helper function to create and load an image
+function loadImage(src) {
+    const img = new Image();
+    img.src = src;
+    return img;
+}
+
+// Character assets
+const characterAssets = {
+    initial: loadImage("../assets/images/objects/character/character-intial.png"),
+    moveUp: loadImage("../assets/images/objects/character/character-moveUp-animation.png"),
+    moveDown: loadImage("../assets/images/objects/character/character-moveDown-animation.png"),
+    moveLeft: loadImage("../assets/images/objects/character/character-moveLeft-animation.png"),
+    moveRight: loadImage("../assets/images/objects/character/character-moveRight-animation.png")
+};
+
+// Enemy assets (skeleton)
+const enemyAssets = {
+    moveUp: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png"),
+    moveDown: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png"),
+    moveLeft: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png"),
+    moveRight: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png")
+};
+
+// Key asset for level 2
+const keyAsset = loadImage("../assets/images/levels/level2/key/key.png");
+
+// Obstacle assets for level 2
+const obstacleAssets = {
+    fire: loadImage("../assets/images/levels/level2/obstacles/animated-fire-lv2-obstacle.png"),
+    rock: loadImage("../assets/images/levels/level2/obstacles/rock-lv2-obstacle.png"),
+    finalExit: loadImage("../assets/images/levels/level2/obstacles/final-wall-lv2-obstacle.png")
+};
+
+// For backward compatibility with existing code
+let character_initial = characterAssets.initial;
+let start = character_initial;
+let character_moveUp_animation = characterAssets.moveUp;
+let character_moveDown_animation = characterAssets.moveDown;
+let character_moveLeft_animation = characterAssets.moveLeft;
+let character_moveRight_animation = characterAssets.moveRight;
+
+let enemy_moveUp_animation = enemyAssets.moveUp;
+let enemy_moveDown_animation = enemyAssets.moveDown;
+let enemy_moveLeft_animation = enemyAssets.moveLeft;
+let enemy_moveRight_animation = enemyAssets.moveRight;
+
+let open_key = keyAsset;
+let key = open_key;
+let animated_fire_lv2_obstacle = obstacleAssets.fire;
+let rock_lv2_obstacle = obstacleAssets.rock;
+let final_exit = obstacleAssets.finalExit;
 
 // character animation object
-let character_moveUp_animation = new Image();
-character_moveUp_animation.src = "../assets/images/objects/character/character-moveUp-animation.png";
-let character_moveDown_animation = new Image();
-character_moveDown_animation.src = "../assets/images/objects/character/character-moveDown-animation.png";
-let character_moveLeft_animation = new Image();
-character_moveLeft_animation.src = "../assets/images/objects/character/character-moveLeft-animation.png";
-let character_moveRight_animation = new Image();
-character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
-let character_initial = new Image();
-character_initial.src = "../assets/images/objects/character/character-intial.png";
-
-// enemy animation object - skeleton sprites for different movement directions
-let enemy_moveUp_animation = new Image();
-enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
-let enemy_moveDown_animation = new Image();
-enemy_moveDown_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png";
-let enemy_moveLeft_animation = new Image();
-enemy_moveLeft_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png";
-let enemy_moveRight_animation = new Image();
-enemy_moveRight_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png";
-
-// key object for level 2
-let open_key = new Image();
-open_key.src = "../assets/images/levels/level2/key/key.png";
-
-// Obstacle objects for level 2
-let animated_fire_lv2_obstacle = new Image();
-animated_fire_lv2_obstacle.src = "../assets/images/levels/level2/obstacles/animated-fire-lv2-obstacle.png";
-let rock_lv2_obstacle = new Image();
-rock_lv2_obstacle.src = "../assets/images/levels/level2/obstacles/rock-lv2-obstacle.png";
-let final_exit = new Image();
-final_exit.src = "../assets/images/levels/level2/obstacles/final-wall-lv2-obstacle.png";
-
-
-let key= open_key;
-let start= character_initial;
 
 // Canvas context for drawing
 let ctx;
@@ -335,7 +356,19 @@ function mainChar(){
     // Draw the initial character sprite
     ctx.drawImage(start, x, y);
     
-    // Event listener for keyboard controls
+    /**
+     * Event listener for keyboard controls
+     * 
+     * Handles player movement (arrow keys), collision detection with obstacles,
+     * updates character animation, checks for key/hammer pickup, and triggers
+     * the final riddle challenge when the player reaches the exit with the key.
+     * 
+     * - ArrowUp: Move player up, check for fire obstacle collision, update animation.
+     * - ArrowDown: Move player down, check for fire obstacle collision, update animation.
+     * - ArrowLeft: Move player left, check for fire obstacle collision, update animation.
+     * - ArrowRight: Move player right, check for fire obstacle collision, update animation.
+     * - After each move, redraw obstacles and check for key pickup or exit condition.
+     */
     addEventListener("keydown", function(e){
         let sW = 93, sH = 110;  // Sprite width and height
         let check = true;       // Flag for collision detection

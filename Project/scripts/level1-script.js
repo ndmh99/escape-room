@@ -25,21 +25,65 @@ let x=450; // x for character initial position in Canvas
 let y=430; // y for character initial position in Canvas
 
 /**
+ * Asset loading - Organized by type
+ * Groups related images into objects for better code organization
+ */
+
+// Character assets
+const characterAssets = {
+    initial: loadImage("../assets/images/objects/character/character-intial.png"),
+    moveUp: loadImage("../assets/images/objects/character/character-moveUp-animation.png"),
+    moveDown: loadImage("../assets/images/objects/character/character-moveDown-animation.png"),
+    moveLeft: loadImage("../assets/images/objects/character/character-moveLeft-animation.png"),
+    moveRight: loadImage("../assets/images/objects/character/character-moveRight-animation.png")
+};
+
+// Enemy assets (skeleton)
+const enemyAssets = {
+    moveUp: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png"),
+    moveDown: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png"),
+    moveLeft: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png"),
+    moveRight: loadImage("../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png")
+};
+
+// Treasure chest assets
+const treasureAssets = {
+    closed: loadImage("../assets/images/objects/treasure-chest/chest-closed.png"),
+    open: loadImage("../assets/images/objects/treasure-chest/chest-open.png")
+};
+
+/**
+ * Helper function to create and load an image
+ * @param {string} src - Path to the image file
+ * @returns {Image} - The loaded image object
+ */
+function loadImage(src) {
+    const img = new Image();
+    img.src = src;
+    return img;
+}
+
+// For backward compatibility with existing code
+let character_initial = characterAssets.initial;
+let character_moveUp_animation = characterAssets.moveUp;
+let character_moveDown_animation = characterAssets.moveDown;
+let character_moveLeft_animation = characterAssets.moveLeft;
+let character_moveRight_animation = characterAssets.moveRight;
+
+let enemy_moveUp_animation = enemyAssets.moveUp;
+let enemy_moveDown_animation = enemyAssets.moveDown;
+let enemy_moveLeft_animation = enemyAssets.moveLeft;
+let enemy_moveRight_animation = enemyAssets.moveRight;
+
+let treasure_chest_closed = treasureAssets.closed;
+let treasure_chest_open = treasureAssets.open;
+
+/**
  * Character animation sprites
  * Each sprite sheet contains multiple frames for animation
  * Direction-specific animations for player movement
  */
 // character animation object
-let character_moveUp_animation = new Image();
-character_moveUp_animation.src = "../assets/images/objects/character/character-moveUp-animation.png";
-let character_moveDown_animation = new Image();
-character_moveDown_animation.src = "../assets/images/objects/character/character-moveDown-animation.png";
-let character_moveLeft_animation = new Image();
-character_moveLeft_animation.src = "../assets/images/objects/character/character-moveLeft-animation.png";
-let character_moveRight_animation = new Image();
-character_moveRight_animation.src = "../assets/images/objects/character/character-moveRight-animation.png";
-let character_initial = new Image();
-character_initial.src = "../assets/images/objects/character/character-intial.png";
 
 /**
  * Enemy animation sprites
@@ -47,24 +91,12 @@ character_initial.src = "../assets/images/objects/character/character-intial.png
  * Direction-specific animations for enemy movement
  */
 // enemy animation object
-let enemy_moveDown_animation = new Image();
-enemy_moveDown_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveDown-animation.png";
-let enemy_moveUp_animation = new Image();
-enemy_moveUp_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveUp-animation.png";
-let enemy_moveLeft_animation = new Image();
-enemy_moveLeft_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveLeft-animation.png";
-let enemy_moveRight_animation = new Image();
-enemy_moveRight_animation.src = "../assets/images/objects/enemy/skeleton/skeleton-moveRight-animation.png";
 
 /**
  * Treasure chest sprites
  * The chest appears closed initially and opens when the player finds the key
  */
 // treasure chest animation object
-let treasure_chest_closed = new Image();
-treasure_chest_closed.src = "../assets/images/objects/treasure-chest/chest-closed.png";
-let treasure_chest_open = new Image();
-treasure_chest_open.src = "../assets/images/objects/treasure-chest/chest-open.png";
 
 /**
  * Key object
@@ -273,12 +305,27 @@ function mainChar(){
     // Draw the initial character sprite
     ctx.drawImage(start,x,y);
     
-    // Event listener for keyboard controls
+    /**
+     * Event listener for keyboard controls
+     * 
+     * Handles player movement (arrow keys), collision detection with obstacles,
+     * updates character animation, checks for key pickup, and triggers
+     * the riddle challenge when the player reaches the chest with the key.
+     * 
+     * - ArrowUp: Move player up, check for stone obstacle collision, update animation.
+     * - ArrowDown: Move player down, check for stone obstacle collision, update animation.
+     * - ArrowLeft: Move player left, check for stone obstacle collision, update animation.
+     * - ArrowRight: Move player right, check for stone obstacle collision, update animation.
+     * - After each move, redraw obstacles and check for key pickup or chest interaction.
+     */
     addEventListener("keydown",function(e){
         let sW = 93 , sH = 110; // Sprite width and height
         let check=true;  // Flag for collision detection
+
+        // Handle up arrow key
         if(e.key == "ArrowUp")
         {
+            // Check collision with stone obstacles
             for(let i=0;i<xStone.length;i++)
             {
                 if(x>xStone[i]-30 && x<xStone[i]+95 && y>yStone[i] && y<yStone[i]+80)
@@ -292,20 +339,14 @@ function mainChar(){
                 y+=0; 
                 ctx.clearRect(x,y,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
             }
             else
             {
                 y-=speed;
                 ctx.clearRect(x,y+speed,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
             }
             if(keyCheck==true)
             {
@@ -320,6 +361,7 @@ function mainChar(){
             brickAndkey.drawBrick();
             stepSound.play()
         }
+        // Handle down arrow key
         else if(e.key == "ArrowDown")
         {
             for(let i=0;i<xStone.length;i++)
@@ -335,10 +377,7 @@ function mainChar(){
                 y-=0;
                 ctx.clearRect(x,y,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                  ctx.drawImage(character_moveDown_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                  stepSound.play()
                  stone.draw();
@@ -348,10 +387,7 @@ function mainChar(){
                 y+=speed;
                 ctx.clearRect(x,y-speed,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                 if(keyCheck==true)
                 {
                     ctx.drawImage(treasure_chest_open,0,580,120,100)
@@ -373,6 +409,7 @@ function mainChar(){
                 stepSound.play()
         }
         }
+        // Handle right arrow key
         else if(e.key == "ArrowRight")
         {
             for(let i=0;i<xStone.length;i++)
@@ -389,10 +426,7 @@ function mainChar(){
                 
                 ctx.clearRect(x,y,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                 ctx.drawImage(character_moveRight_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 stepSound.play()
                 stone.draw();
@@ -403,10 +437,7 @@ function mainChar(){
                 x+=speed;
                 ctx.clearRect(x-speed,y,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                 if(keyCheck==true)
                 {
                     ctx.drawImage(treasure_chest_open,0,580,120,100)
@@ -428,6 +459,7 @@ function mainChar(){
                 stepSound.play()
             }
         }
+        // Handle left arrow key
         else if(e.key=="ArrowLeft")
         {
             for(let i=0;i<xStone.length;i++)
@@ -442,10 +474,7 @@ function mainChar(){
                 x+=0;
                 ctx.clearRect(x,y,70,109)
                 cycle++;
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                 stone.draw();
                 ctx.drawImage(character_moveLeft_animation,cycle*sW,0,sW,sH,x,y,sW,sH);
                 stepSound.play()
@@ -455,10 +484,7 @@ function mainChar(){
                 x-=speed;
                 ctx.clearRect(x+speed,y,70,109)
                 cycle++; 
-                if(cycle>=3)
-                {
-                    cycle=0;
-                }
+                if(cycle>=3) cycle=0;
                 if(keyCheck==true)
                 {
                     ctx.drawImage(treasure_chest_open,0,580,120,100)
@@ -480,7 +506,9 @@ function mainChar(){
                 stepSound.play()
         }
         }
+        // Redraw cactus obstacles after character movement
         brickAndkey.drawBrick();
+        // Check if player is close to the cactus with the hidden key
         if(Math.sqrt((x-xBrick[brickAndkey.ran])**2+(y-yBrick[brickAndkey.ran])**2)<60)
         {
             alert("You got a key");
@@ -490,6 +518,7 @@ function mainChar(){
             ctx.drawImage(treasure_chest_open,0,580,120,100)
             ctx.drawImage(key,xBrick[brickAndkey.ran],yBrick[brickAndkey.ran])
         }
+        // Check if player with the key has reached the chest
         if(keyCheck==true && y>560 && x<63)
         {
             challenge();
@@ -525,7 +554,7 @@ function Skeleton(xSke,ySke,direction,name,start,end){
     this.speed=10;           // Movement speed
     this.name =name;         // Current sprite image
     this.start=start;        // Starting boundary
-    this.end=end;            // Ending boundary
+    this.end=end;            // Ending boundary of movement (depends on direction)
     
     /**
      * Draw and update the skeleton
