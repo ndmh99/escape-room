@@ -1,25 +1,64 @@
+<!-- 
+Escape Room Game - Level 2
+Created by: ndmh99
+Last updated: May 20, 2025
+
+Description:
+This is Level 2 of the escape room game. Players navigate through a more challenging environment
+with more enemies and animated fire obstacles. The player must find a hammer (key) to break
+through the final wall and reach the exit, then solve a final riddle to win the game.
+
+Game Elements:
+- 4 skeleton enemies with different movement patterns (increased difficulty)
+- Animated fire obstacles that block player movement
+- Hidden hammer placed randomly at one of the rock locations
+- Final exit wall that can be broken with the hammer
+- Final riddle challenge to complete the game
+
+Key Game Mechanics:
+- Canvas-based game rendering
+- Background audio with level 2 theme
+- Keyboard controls for player movement (arrow keys)
+- Enhanced enemy AI with more complex movement patterns
+- Animated fire obstacles with sprite animation
+- Hidden hammer and final exit mechanics
+- Final riddle challenge to complete the game
+
+Technical Implementation:
+- All game logic is in level2-script.js
+- Uses HTML5 Canvas for rendering
+- Audio element for background music
+- JavaScript event handling for keyboard controls
+- Sprite animation for fire obstacles
+-->
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Escape Room</title>
 		<meta charset="UTF-8">
+		<!-- Main game script for level 2 -->
 		<script src="../scripts/level2-script.js"></script>
-		<style>
+		<style>			
 			body {
 			  background: url("../assets/images/levels/level2/background/level2-bg.png");
 			  background-repeat: no-repeat;
 			  background-size: 1000px 700px;
 			}
-			</style>
+		</style>
 	</head>
+	<!-- Initialize game on page load with setup() function -->
 	<body onload="setup()">
+		<!-- Background audio element for level theme -->
 		<audio loop id="myAudio">
 			<source src="../assets/audio/theme/level2_theme.mp3" type="audio/mpeg" allow="autoplay">
 		</audio>
 		<script>
+			// Start background music once page is loaded
 			var sound = document.getElementById("myAudio"); 
 			sound.play(); 
 		</script>
+		<!-- Main game canvas where all game elements will be rendered -->
 		<canvas id="surface" width="1000" height="700"></canvas>
 	</body>
 </html>

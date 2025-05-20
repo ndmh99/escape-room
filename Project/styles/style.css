@@ -1,5 +1,27 @@
+/* 
+Escape Room Game - Global Styles
+Created by: ndmh99
+Last updated: May 20, 2025
+
+Description:
+This stylesheet contains global styles that apply across the game.
+Note: Most level-specific styling is defined inline in the respective HTML files.
+
+Contents:
+- Default background settings
+- Global font and layout settings
+- Common element styling
+
+Usage:
+This file is imported by the game HTML files for consistent styling.
+Level-specific styles are defined inline in each level's HTML file.
+*/
+
 body {
   background: url("../assets/images/sand.png");
   background-repeat: no-repeat;
   background-size: 1000px 700px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
 }

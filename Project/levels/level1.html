@@ -1,25 +1,62 @@
+<!-- 
+Escape Room Game - Level 1
+Created by: ndmh99
+Last updated: May 20, 2025
+
+Description:
+This is Level 1 of the escape room game. Players navigate through a desert-themed environment,
+avoiding skeleton enemies while searching for a key to unlock the treasure chest.
+The player must solve a riddle to complete the level.
+
+Game Elements:
+- 3 skeleton enemies with different movement patterns
+- Cactus and stone obstacles that block player movement
+- Hidden key placed randomly at one of the cactus locations
+- Treasure chest that can be unlocked with the key
+- Riddle challenge to complete the level and advance to Level 2
+
+Key Game Mechanics:
+- Canvas-based game rendering
+- Background audio with desert theme
+- Keyboard controls for player movement (arrow keys)
+- Enemy skeleton AI with movement patterns
+- Hidden key and treasure chest mechanics
+- Riddle challenge to advance to the next level
+
+Technical Implementation:
+- All game logic is in level1-script.js
+- Uses HTML5 Canvas for rendering
+- Audio element for background music
+- JavaScript event handling for keyboard controls
+-->
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Escape Room</title>
 		<meta charset="UTF-8">
+		<!-- Main game script for level 1 -->
 		<script src="../scripts/level1-script.js"></script>
-		<style>
+		<style>			
 			body {
 			  background: url("../assets/images/levels/level1/background/level1-bg.png");
 			  background-repeat: no-repeat;
 			  background-size: 1000px 700px;
 			}
-			</style>
+		</style>
 	</head>
+	<!-- Initialize game on page load with setup() function -->
 	<body onload="setup()">
+		<!-- Background audio element for level theme -->
 		<audio loop id="myAudio">
 			<source src="../assets/audio/theme/level1_theme.mp3" type="audio/mpeg">
 		</audio>
 		<script>
+			// Start background music once page is loaded
 			var sound = document.getElementById("myAudio"); 
 			sound.play(); 
 		</script>
+		<!-- Main game canvas where all game elements will be rendered -->
 		<canvas id="surface" width="1000" height="700"></canvas>
 	</body>
 </html>
